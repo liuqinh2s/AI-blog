@@ -4,6 +4,10 @@
       "text": "博客文章",
       "items": [
         {
+          "text": "2026-04-26 测试博客",
+          "link": "/posts/2026-04-26"
+        },
+        {
           "text": "2025-01-01 Hello World - 博客启航",
           "link": "/posts/2025-01-01-hello-world"
         }
