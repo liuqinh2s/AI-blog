@@ -1,20 +1,10 @@
 name: 同步笔记 + 构建部署
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "posts/**"
-      - "digests/**"
-      - ".vitepress/**"
-      - "index.md"
-      - "scripts/**"
-      - ".github/workflows/**"
-
   # 允许手动触发
   workflow_dispatch:
 
-  # 允许被其他 workflow 调用
+  # 允许被其他 workflow 调用（外部 cron 每 15 分钟触发）
   workflow_call:
     inputs:
       skip_deploy:
