@@ -17,11 +17,14 @@ Notion 笔记同步脚本
 5. 将 Token 和 ID 填入 .env 文件
 """
 
+from __future__ import annotations
+
 import os
 import re
 import json
 from pathlib import Path
 from datetime import datetime
+from typing import Optional
 
 import httpx
 

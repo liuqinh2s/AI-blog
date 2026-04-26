@@ -43,12 +43,6 @@ jobs:
       - name: Install Python dependencies
         run: pip install httpx
 
-      - name: 同步 flomo 笔记（仅 #blog-sync 标签）
-        env:
-          FLOMO_TOKEN: ${{ secrets.FLOMO_TOKEN }}
-          FLOMO_SYNC_TAG: ${{ vars.FLOMO_SYNC_TAG || 'blog-sync' }}
-        run: python3 scripts/sync_flomo.py
-
       - name: 同步 Notion 数据库
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}

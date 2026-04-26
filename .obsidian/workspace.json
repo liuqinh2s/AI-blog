@@ -11,14 +11,10 @@
             "id": "5473e833694a8a89",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "posts/2026-04-26.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "2026-04-26"
+              "title": "新标签页"
             }
           }
         ]
@@ -94,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "posts/2026-04-26.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +99,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "2026-04-26 的反向链接列表"
+              "title": "反向链接"
             }
           },
           {
@@ -113,12 +108,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "posts/2026-04-26.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "2026-04-26 的出链列表"
+              "title": "出链"
             }
           },
           {
@@ -156,13 +150,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "posts/2026-04-26.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "2026-04-26 的大纲"
+              "title": "大纲"
             }
           }
         ]
@@ -185,13 +178,15 @@
   },
   "active": "5473e833694a8a89",
   "lastOpenFiles": [
+    "posts/2026-04-26-notion-1.md",
+    "posts/index.md",
+    "posts/2026-04-26.md",
+    "posts/2025-01-01-hello-world.md",
+    "notes",
     "scripts/sync_notion.py",
     "scripts/sync_flomo.py",
-    "posts/2025-01-01-hello-world.md",
     "2025-01-01.md",
-    "posts/2026-04-26.md",
     "posts/2025-01-01.md",
-    "posts/index.md",
     "README.md",
     "index.md"
   ]

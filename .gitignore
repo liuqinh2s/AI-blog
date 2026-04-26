@@ -1,5 +1,4 @@
 node_modules
-.flomo_sync_state.json
 .notion_sync_state.json
 .vitepress/dist/
 .vitepress/cache/
