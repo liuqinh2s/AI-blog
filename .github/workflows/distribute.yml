@@ -1,0 +1,88 @@
+name: 多平台内容分发
+
+on:
+  # 期刊生成完成后自动触发
+  workflow_run:
+    workflows: ["生成期刊（含同步 + 部署）"]
+    types:
+      - completed
+
+  # 允许手动触发
+  workflow_dispatch:
+    inputs:
+      digest_type:
+        description: "期刊类型（留空则自动选择最新的）"
+        required: false
+        type: choice
+        options:
+          - ""
+          - daily
+          - weekly
+          - monthly
+          - quarterly
+          - yearly
+      platforms:
+        description: "目标平台（逗号分隔，留空则全部）"
+        required: false
+        default: "wechat,weibo,twitter,xiaohongshu,zsxq"
+      dry_run:
+        description: "预览模式（不实际发布）"
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  distribute:
+    runs-on: ubuntu-latest
+    # 只在期刊生成成功后运行（手动触发时始终运行）
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install httpx
+
+      - name: 分发内容到社交平台
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          WECHAT_APPID: ${{ secrets.WECHAT_APPID }}
+          WECHAT_SECRET: ${{ secrets.WECHAT_SECRET }}
+          WEIBO_ACCESS_TOKEN: ${{ secrets.WEIBO_ACCESS_TOKEN }}
+          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
+          ZSXQ_ACCESS_TOKEN: ${{ secrets.ZSXQ_ACCESS_TOKEN }}
+          ZSXQ_GROUP_ID: ${{ secrets.ZSXQ_GROUP_ID }}
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.digest_type }}" ]; then
+            ARGS="$ARGS --type ${{ github.event.inputs.digest_type }}"
+          fi
+          if [ -n "${{ github.event.inputs.platforms }}" ]; then
+            ARGS="$ARGS --platforms ${{ github.event.inputs.platforms }}"
+          fi
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          python3 scripts/distribute.py $ARGS
+
+      - name: 保存分发状态和输出
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add -A
+          git diff --staged --quiet || git commit -m "📤 自动分发内容到社交平台"
+          git push

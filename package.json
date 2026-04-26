@@ -12,7 +12,14 @@
     "ai:summarize": "python3 scripts/ai_summarize.py",
     "ai:digests": "python3 scripts/generate_digests.py",
     "ai:sidebar": "python3 scripts/generate_sidebar.py",
-    "ai:all": "python3 scripts/sync_flomo.py && python3 scripts/sync_notion.py && python3 scripts/ai_summarize.py && python3 scripts/generate_digests.py && python3 scripts/generate_sidebar.py"
+    "ai:distribute": "python3 scripts/distribute.py",
+    "ai:distribute:preview": "python3 scripts/distribute.py --dry-run",
+    "ai:distribute:weibo": "python3 scripts/distribute.py --platforms weibo",
+    "ai:distribute:twitter": "python3 scripts/distribute.py --platforms twitter",
+    "ai:distribute:wechat": "python3 scripts/distribute.py --platforms wechat",
+    "ai:distribute:xhs": "python3 scripts/distribute.py --platforms xiaohongshu",
+    "ai:distribute:zsxq": "python3 scripts/distribute.py --platforms zsxq",
+    "ai:all": "python3 scripts/sync_flomo.py && python3 scripts/sync_notion.py && python3 scripts/ai_summarize.py && python3 scripts/generate_digests.py && python3 scripts/generate_sidebar.py && python3 scripts/distribute.py"
   },
   "repository": {
     "type": "git",

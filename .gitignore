@@ -1,5 +1,7 @@
 node_modules
 .notion_sync_state.json
+.distribute_state.json
+distribute_output/
 .vitepress/dist/
 .vitepress/cache/
 .env
