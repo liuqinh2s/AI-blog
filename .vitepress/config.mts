@@ -28,7 +28,10 @@ export default defineConfig({
     lang: "zh-CN",
     cleanUrls: true,
 
-    head: [["meta", { name: "theme-color", content: "#5f67ee" }]],
+    head: [
+        ["meta", { name: "theme-color", content: "#5f67ee" }],
+        ["link", { rel: "icon", href: "/AI-blog/favicon.ico", type: "image/x-icon" }],
+    ],
 
     themeConfig: {
         nav: [

@@ -397,12 +397,6 @@ notion_id: {page_id}
 # {title}
 
 {markdown_body}
-
-## AI 总结
-
-> 此部分由 AI 自动生成
-
-*等待 AI 总结生成...*
 """
     return filename, content
 
@@ -481,25 +475,6 @@ def sync_notion():
             # 检查是否已有对应文件（更新场景）
             existing = find_existing_post(page_id)
             if existing:
-                # 保留已有的 AI 总结（如果不是占位符）
-                old_content = existing.read_text(encoding="utf-8")
-                if "此部分由 AI 自动生成" in old_content and "等待 AI 总结生成" not in old_content:
-                    # 提取旧的 AI 总结
-                    import re as _re
-                    ai_match = _re.search(
-                        r"(## AI 总结\s*\n.*)",
-                        old_content,
-                        _re.DOTALL,
-                    )
-                    if ai_match:
-                        old_ai_section = ai_match.group(1)
-                        content = _re.sub(
-                            r"## AI 总结\s*\n.*",
-                            old_ai_section,
-                            content,
-                            flags=_re.DOTALL,
-                        )
-
                 existing.write_text(content, encoding="utf-8")
                 update_count += 1
                 print(f"  🔄 更新: {existing.name}")
