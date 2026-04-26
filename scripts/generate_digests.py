@@ -227,9 +227,9 @@ date: {datetime.now().strftime('%Y-%m-%d')}
 
 
 def is_period_ended_daily(date_str: str) -> bool:
-    """判断某天是否已经过去（只生成昨天及更早的日报）"""
+    """判断某天是否已经过去（包含当天，当天的日报当天即可生成）"""
     today = datetime.now().strftime("%Y-%m-%d")
-    return date_str < today
+    return date_str <= today
 
 
 def is_period_ended_weekly(week_str: str) -> bool:
@@ -279,7 +279,7 @@ def generate_daily_digests(posts: list[dict]):
             print(f"⏭️  日报 {date_str} 已存在，跳过")
             continue
         if not is_period_ended_daily(date_str):
-            print(f"⏭️  日报 {date_str}: 当天还未结束，跳过")
+            print(f"⏭️  日报 {date_str}: 日期在未来，跳过")
             continue
         print(f"📅 生成日报: {date_str}")
         content = generate_digest_content(f"{date_str} 日报", date_str, day_posts)
