@@ -130,25 +130,19 @@ def inject_ai_summary(content: str, summary: str) -> str:
         return content.rstrip() + f"\n\n{replacement}\n"
 
 
-SYSTEM_PROMPT = """你是一个知识提炼助手。用户会给你一篇笔记，包含他看到的文章/资料和他的思考。
-你需要：
-1. 提取 3-5 个关键知识点，每个用一句话概括
-2. 给出一段 100 字以内的总结
-3. 如果有值得深入的方向，给出 1-2 个延伸阅读建议
+PROMPTS_DIR = Path(__file__).resolve().parent.parent / "prompts"
 
-输出格式：
-### 关键知识点
-- 知识点1
-- 知识点2
-- ...
 
-### 总结
-一段简洁的总结。
+def load_prompt(filename: str) -> str:
+    """从 prompts/ 目录加载提示词文件"""
+    prompt_path = PROMPTS_DIR / filename
+    if not prompt_path.exists():
+        print(f"⚠️  提示词文件不存在: {prompt_path}")
+        return ""
+    return prompt_path.read_text(encoding="utf-8").strip()
 
-### 延伸思考
-- 建议1
-- 建议2
-"""
+
+SYSTEM_PROMPT = load_prompt("summarize_system.md")
 
 
 def summarize_post(post_path: Path) -> bool:

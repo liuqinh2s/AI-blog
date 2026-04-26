@@ -1,4 +1,4 @@
-name: 同步笔记 + AI 总结 + 构建部署
+name: 同步笔记 + 构建部署
 
 on:
   push:
@@ -27,7 +27,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  ai-and-deploy:
+  sync-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -49,20 +49,15 @@ jobs:
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
         run: python3 scripts/sync_notion.py
 
-      - name: AI 总结文章
-        env:
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-        run: python3 scripts/ai_summarize.py
-
       - name: 生成侧边栏
         run: python3 scripts/generate_sidebar.py
 
-      - name: Commit AI 生成的内容
+      - name: Commit 同步内容
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add -A
-          git diff --staged --quiet || git commit -m "🤖 AI 自动总结"
+          git diff --staged --quiet || git commit -m "🔄 自动同步更新"
           git push
 
       - name: Setup Node.js

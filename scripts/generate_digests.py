@@ -171,14 +171,19 @@ def posts_to_summary_text(posts: list[dict]) -> str:
     return "\n\n---\n\n".join(parts)
 
 
-DIGEST_SYSTEM_PROMPT = """你是一个知识期刊编辑。用户会给你一段时间内的多篇笔记内容。
-你需要生成一份精炼的知识期刊，包含：
-1. 本期概览（2-3 句话总结这段时间的学习主题）
-2. 核心知识点（提取最重要的 5-10 个知识点）
-3. 主题分类（将知识点按主题归类）
-4. 思考与洞察（从这些笔记中提炼出的深层思考）
+PROMPTS_DIR = Path(__file__).resolve().parent.parent / "prompts"
 
-用 Markdown 格式输出，语言简洁专业。"""
+
+def load_prompt(filename: str) -> str:
+    """从 prompts/ 目录加载提示词文件"""
+    prompt_path = PROMPTS_DIR / filename
+    if not prompt_path.exists():
+        print(f"⚠️  提示词文件不存在: {prompt_path}")
+        return ""
+    return prompt_path.read_text(encoding="utf-8").strip()
+
+
+DIGEST_SYSTEM_PROMPT = load_prompt("digest_system.md")
 
 
 def generate_digest_content(

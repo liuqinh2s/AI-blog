@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # 第一步：调用 deploy.yml 完成同步笔记 + AI 总结 + 构建部署
+  # 第一步：调用 deploy.yml 完成同步笔记 + 构建部署
   sync-and-deploy:
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
