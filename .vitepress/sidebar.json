@@ -1,0 +1,40 @@
+{
+  "/posts/": [
+    {
+      "text": "博客文章",
+      "items": [
+        {
+          "text": "2025-01-01 Hello World - 博客启航",
+          "link": "/posts/2025-01-01-hello-world"
+        }
+      ]
+    }
+  ],
+  "/digests/": [
+    {
+      "text": "日报",
+      "collapsed": true,
+      "items": []
+    },
+    {
+      "text": "周刊",
+      "collapsed": true,
+      "items": []
+    },
+    {
+      "text": "月刊",
+      "collapsed": true,
+      "items": []
+    },
+    {
+      "text": "季刊",
+      "collapsed": true,
+      "items": []
+    },
+    {
+      "text": "年刊",
+      "collapsed": true,
+      "items": []
+    }
+  ]
+}

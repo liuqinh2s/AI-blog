@@ -1,0 +1,23 @@
+{
+  "name": "ai-blog",
+  "version": "1.0.0",
+  "description": "AI 博客 - 随手记 + AI 总结，自动生成知识期刊",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview",
+    "ai:summarize": "python3 scripts/ai_summarize.py",
+    "ai:digests": "python3 scripts/generate_digests.py",
+    "ai:sidebar": "python3 scripts/generate_sidebar.py",
+    "ai:all": "python3 scripts/ai_summarize.py && python3 scripts/generate_digests.py && python3 scripts/generate_sidebar.py"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liuqinh2s/AI-blog.git"
+  },
+  "author": "liuqinh2s",
+  "license": "ISC",
+  "devDependencies": {
+    "vitepress": "^1.6.4"
+  }
+}

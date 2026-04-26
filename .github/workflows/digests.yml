@@ -1,0 +1,51 @@
+name: 定时生成期刊
+
+on:
+  schedule:
+    # 每天 UTC 16:00 = 北京时间次日 00:00，生成前一天的日报
+    - cron: "0 16 * * *"
+
+  # 允许手动触发
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  generate-digests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install httpx
+
+      - name: 生成期刊（日报 + 周刊 + 月刊 + 季刊 + 年刊）
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: python3 scripts/generate_digests.py
+
+      - name: 生成侧边栏
+        run: python3 scripts/generate_sidebar.py
+
+      - name: Commit 期刊内容
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add -A
+          git diff --staged --quiet || git commit -m "📰 自动生成期刊"
+          git push
+
+      # push 后会自动触发 deploy.yml 重新构建部署
