@@ -14,7 +14,12 @@
     {
       "text": "日报",
       "collapsed": true,
-      "items": []
+      "items": [
+        {
+          "text": "2026-04-26",
+          "link": "/digests/daily/2026-04-26"
+        }
+      ]
     },
     {
       "text": "周刊",
