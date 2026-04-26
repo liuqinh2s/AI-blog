@@ -1,4 +1,4 @@
-name: AI 总结 + 构建部署
+name: 同步笔记 + AI 总结 + 构建部署
 
 on:
   push:
@@ -13,6 +13,9 @@ on:
 
   # 允许手动触发
   workflow_dispatch:
+
+  # 允许被其他 workflow 调用
+  workflow_call:
 
 permissions:
   contents: write

@@ -1,4 +1,4 @@
-name: 同步 flomo + Notion + 生成期刊
+name: 生成期刊（含同步 + 部署）
 
 on:
   schedule:
@@ -18,11 +18,21 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  sync-and-generate:
+  # 第一步：调用 deploy.yml 完成同步笔记 + AI 总结 + 构建部署
+  sync-and-deploy:
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+
+  # 第二步：生成期刊（此时 posts 已是最新内容）
+  generate-digests:
+    needs: sync-and-deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # 拉取 deploy.yml 刚 push 的最新内容
+          ref: main
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -32,23 +42,6 @@ jobs:
       - name: Install Python dependencies
         run: pip install httpx
 
-      - name: 同步 flomo 笔记（仅 #blog-sync 标签）
-        env:
-          FLOMO_TOKEN: ${{ secrets.FLOMO_TOKEN }}
-          FLOMO_SYNC_TAG: ${{ vars.FLOMO_SYNC_TAG || 'blog-sync' }}
-        run: python3 scripts/sync_flomo.py
-
-      - name: 同步 Notion 数据库
-        env:
-          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
-        run: python3 scripts/sync_notion.py
-
-      - name: AI 总结文章
-        env:
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-        run: python3 scripts/ai_summarize.py
-
       - name: 生成期刊（日报 + 周刊 + 月刊 + 季刊 + 年刊）
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
@@ -57,12 +50,12 @@ jobs:
       - name: 生成侧边栏
         run: python3 scripts/generate_sidebar.py
 
-      - name: Commit 同步内容
+      - name: Commit 期刊内容
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add -A
-          git diff --staged --quiet || git commit -m "🔄 同步 flomo + Notion + 自动生成期刊"
+          git diff --staged --quiet || git commit -m "📰 自动生成期刊"
           git push
 
       # push 后会自动触发 deploy.yml 重新构建部署
