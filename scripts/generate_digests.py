@@ -268,20 +268,24 @@ def is_period_ended_yearly(year_str: str) -> bool:
 
 
 def generate_daily_digests(posts: list[dict]):
-    """生成日报（只生成昨天及更早的）"""
+    """生成日报（当天日报每次都重新生成，往日日报跳过）"""
     daily_dir = DIGESTS_DIR / "daily"
     daily_dir.mkdir(parents=True, exist_ok=True)
 
+    today = datetime.now().strftime("%Y-%m-%d")
     groups = group_posts_by_date(posts)
     for date_str, day_posts in groups.items():
         output = daily_dir / f"{date_str}.md"
-        if output.exists():
-            print(f"⏭️  日报 {date_str} 已存在，跳过")
-            continue
         if not is_period_ended_daily(date_str):
             print(f"⏭️  日报 {date_str}: 日期在未来，跳过")
             continue
-        print(f"📅 生成日报: {date_str}")
+        if output.exists() and date_str != today:
+            print(f"⏭️  日报 {date_str} 已存在，跳过")
+            continue
+        if date_str == today and output.exists():
+            print(f"🔄 重新生成当天日报: {date_str}")
+        else:
+            print(f"📅 生成日报: {date_str}")
         content = generate_digest_content(f"{date_str} 日报", date_str, day_posts)
         if content:
             output.write_text(content, encoding="utf-8")
