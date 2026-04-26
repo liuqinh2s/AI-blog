@@ -16,6 +16,12 @@ on:
 
   # 允许被其他 workflow 调用
   workflow_call:
+    inputs:
+      skip_deploy:
+        description: "跳过 Pages 部署（由调用方自行部署时使用）"
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -76,13 +82,16 @@ jobs:
         run: npx vitepress build
 
       - name: Setup Pages
+        if: ${{ !inputs.skip_deploy }}
         uses: actions/configure-pages@v4
 
       - name: Upload artifact
+        if: ${{ !inputs.skip_deploy }}
         uses: actions/upload-pages-artifact@v3
         with:
           path: .vitepress/dist
 
       - name: Deploy to GitHub Pages
+        if: ${{ !inputs.skip_deploy }}
         id: deployment
         uses: actions/deploy-pages@v4

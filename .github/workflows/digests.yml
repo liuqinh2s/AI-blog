@@ -18,9 +18,11 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # 第一步：调用 deploy.yml 完成同步笔记 + 构建部署
+  # 第一步：调用 deploy.yml 完成同步笔记（跳过部署，由本 workflow 最终部署）
   sync-and-deploy:
     uses: ./.github/workflows/deploy.yml
+    with:
+      skip_deploy: true
     secrets: inherit
 
   # 第二步：生成期刊（此时 posts 已是最新内容）
