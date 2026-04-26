@@ -23,7 +23,7 @@ function loadSidebar() {
 
 export default defineConfig({
     title: "liuqinh2s' AI Blog",
-    description: "随手记 + AI 总结，自动生成知识期刊",
+    description: "flomo + Notion 随手记 → AI 总结 → 自动生成知识期刊",
     base: "/AI-blog/",
     lang: "zh-CN",
     cleanUrls: true,

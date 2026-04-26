@@ -1,8 +1,8 @@
-name: 定时生成期刊
+name: 同步 flomo + Notion + 生成期刊
 
 on:
   schedule:
-    # 每天 UTC 16:00 = 北京时间次日 00:00，生成前一天的日报
+    # 每天 UTC 16:00 = 北京时间次日 00:00
     - cron: "0 16 * * *"
 
   # 允许手动触发
@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  generate-digests:
+  sync-and-generate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,6 +32,23 @@ jobs:
       - name: Install Python dependencies
         run: pip install httpx
 
+      - name: 同步 flomo 笔记（仅 #blog-sync 标签）
+        env:
+          FLOMO_TOKEN: ${{ secrets.FLOMO_TOKEN }}
+          FLOMO_SYNC_TAG: ${{ vars.FLOMO_SYNC_TAG || 'blog-sync' }}
+        run: python3 scripts/sync_flomo.py
+
+      - name: 同步 Notion 数据库
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+        run: python3 scripts/sync_notion.py
+
+      - name: AI 总结文章
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: python3 scripts/ai_summarize.py
+
       - name: 生成期刊（日报 + 周刊 + 月刊 + 季刊 + 年刊）
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
@@ -40,12 +57,12 @@ jobs:
       - name: 生成侧边栏
         run: python3 scripts/generate_sidebar.py
 
-      - name: Commit 期刊内容
+      - name: Commit 同步内容
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add -A
-          git diff --staged --quiet || git commit -m "📰 自动生成期刊"
+          git diff --staged --quiet || git commit -m "🔄 同步 flomo + Notion + 自动生成期刊"
           git push
 
       # push 后会自动触发 deploy.yml 重新构建部署

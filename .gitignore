@@ -1,4 +1,6 @@
-node_modules/
+node_modules
+.flomo_sync_state.json
+.notion_sync_state.json
 .vitepress/dist/
 .vitepress/cache/
 .env
