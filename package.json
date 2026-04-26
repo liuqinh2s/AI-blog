@@ -1,16 +1,14 @@
 {
   "name": "ai-blog",
   "version": "1.0.0",
-  "description": "AI 博客 - flomo + Notion 随手记 → AI 总结 → 自动生成知识期刊",
+  "description": "AI 博客 - Notion 随手记 → AI 总结 → 自动生成知识期刊",
   "scripts": {
     "dev": "vitepress dev",
     "build": "python3 scripts/cleanup_dead_links.py && python3 scripts/generate_sidebar.py && vitepress build",
     "cleanup": "python3 scripts/cleanup_dead_links.py",
     "preview": "vitepress preview",
-    "flomo:sync": "python3 scripts/sync_flomo.py",
     "notion:sync": "python3 scripts/sync_notion.py",
-    "sync:all": "python3 scripts/sync_flomo.py && python3 scripts/sync_notion.py",
-    "ai:summarize": "python3 scripts/ai_summarize.py",
+    "sync:all": "python3 scripts/sync_notion.py",
     "ai:digests": "python3 scripts/generate_digests.py",
     "ai:sidebar": "python3 scripts/generate_sidebar.py",
     "ai:distribute": "python3 scripts/distribute.py",
@@ -20,7 +18,7 @@
     "ai:distribute:wechat": "python3 scripts/distribute.py --platforms wechat",
     "ai:distribute:xhs": "python3 scripts/distribute.py --platforms xiaohongshu",
     "ai:distribute:zsxq": "python3 scripts/distribute.py --platforms zsxq",
-    "ai:all": "python3 scripts/sync_flomo.py && python3 scripts/sync_notion.py && python3 scripts/ai_summarize.py && python3 scripts/generate_digests.py && python3 scripts/generate_sidebar.py && python3 scripts/distribute.py"
+    "ai:all": "python3 scripts/sync_notion.py && python3 scripts/generate_digests.py && python3 scripts/generate_sidebar.py && python3 scripts/distribute.py"
   },
   "repository": {
     "type": "git",
