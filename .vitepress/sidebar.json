@@ -14,27 +14,52 @@
     {
       "text": "日报",
       "collapsed": true,
-      "items": []
+      "items": [
+        {
+          "text": "2025-01-01",
+          "link": "/digests/daily/2025-01-01"
+        }
+      ]
     },
     {
       "text": "周刊",
       "collapsed": true,
-      "items": []
+      "items": [
+        {
+          "text": "2025-W01",
+          "link": "/digests/weekly/2025-W01"
+        }
+      ]
     },
     {
       "text": "月刊",
       "collapsed": true,
-      "items": []
+      "items": [
+        {
+          "text": "2025-01",
+          "link": "/digests/monthly/2025-01"
+        }
+      ]
     },
     {
       "text": "季刊",
       "collapsed": true,
-      "items": []
+      "items": [
+        {
+          "text": "2025-Q1",
+          "link": "/digests/quarterly/2025-Q1"
+        }
+      ]
     },
     {
       "text": "年刊",
       "collapsed": true,
-      "items": []
+      "items": [
+        {
+          "text": "2025",
+          "link": "/digests/yearly/2025"
+        }
+      ]
     }
   ]
 }
