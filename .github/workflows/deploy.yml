@@ -49,6 +49,9 @@ jobs:
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
         run: python3 scripts/sync_notion.py
 
+      - name: 清理失效链接
+        run: python3 scripts/cleanup_dead_links.py
+
       - name: 生成侧边栏
         run: python3 scripts/generate_sidebar.py
 
