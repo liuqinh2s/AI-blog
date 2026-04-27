@@ -4,12 +4,12 @@
       "text": "博客文章",
       "items": [
         {
-          "text": "2026-04-26 新的博客→AI博客",
-          "link": "/posts/2026-04-26-notion-1"
-        },
-        {
           "text": "2026-04-26 爬爬垫围栏怎么选",
           "link": "/posts/2026-04-26-notion-34e5cea8"
+        },
+        {
+          "text": "2026-04-26 新的博客→AI博客",
+          "link": "/posts/2026-04-26-notion-1"
         }
       ]
     }
@@ -28,7 +28,12 @@
     {
       "text": "周刊",
       "collapsed": true,
-      "items": []
+      "items": [
+        {
+          "text": "2026-W17",
+          "link": "/digests/weekly/2026-W17"
+        }
+      ]
     },
     {
       "text": "月刊",
