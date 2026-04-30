@@ -4,6 +4,10 @@
       "text": "博客文章",
       "items": [
         {
+          "text": "2026-04-30 打Tag这个事情应该由AI来做",
+          "link": "/posts/2026-04-30-notion-3525cea8d30e"
+        },
+        {
           "text": "2026-04-30 投资应该两条腿走路",
           "link": "/posts/2026-04-30-notion-3525cea8"
         },
@@ -12,12 +16,12 @@
           "link": "/posts/2026-04-29-notion-3515cea8"
         },
         {
-          "text": "2026-04-26 新的博客→AI博客",
-          "link": "/posts/2026-04-26-notion-1"
-        },
-        {
           "text": "2026-04-26 爬爬垫围栏怎么选",
           "link": "/posts/2026-04-26-notion-34e5cea8"
+        },
+        {
+          "text": "2026-04-26 新的博客→AI博客",
+          "link": "/posts/2026-04-26-notion-1"
         }
       ]
     }

@@ -371,11 +371,12 @@ def page_to_post(page: dict) -> tuple[str, str]:
 
     # 文件名：直接用日期（你的标题就是日期）
     # 如果标题不是日期格式，加上 notion 前缀避免冲突
+    # 使用 page_id 前12位作为 slug，避免不同页面 ID 前缀相同导致文件名碰撞
     title_date = extract_date_from_title(title)
     if title_date:
         filename = title_date
     else:
-        slug = page_id.replace("-", "")[:8]
+        slug = page_id.replace("-", "")[:12]
         filename = f"{date_str}-notion-{slug}"
 
     # 构建 frontmatter
@@ -471,14 +472,16 @@ def sync_notion():
             else:
                 post_path = POSTS_DIR / f"{filename}.md"
 
-                # 避免文件名冲突（和非 Notion 来源的文件）
+                # 避免文件名冲突
                 if post_path.exists():
                     old_content = post_path.read_text(encoding="utf-8")
-                    if f"notion_id:" not in old_content:
-                        # 文件存在但不是 Notion 来源，加后缀
+                    if f"notion_id: {page_id}" not in old_content:
+                        # 文件存在但不属于当前页面（可能是非 Notion 来源，或另一个 Notion 页面），加后缀
                         counter = 1
-                        while post_path.exists():
-                            post_path = POSTS_DIR / f"{filename}-notion-{counter}.md"
+                        while True:
+                            post_path = POSTS_DIR / f"{filename}-{counter}.md"
+                            if not post_path.exists():
+                                break
                             counter += 1
 
                 post_path.write_text(content, encoding="utf-8")
