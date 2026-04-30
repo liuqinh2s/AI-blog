@@ -64,22 +64,16 @@ def notion_headers() -> dict:
 def query_database(
     database_id: str,
     start_cursor: str | None = None,
-    last_edited_after: str | None = None,
 ) -> dict:
     """
-    查询 Notion 数据库。
-    如果提供 last_edited_after（ISO 时间），只返回在该时间之后编辑过的页面。
+    查询 Notion 数据库，返回所有页面。
+    不使用 last_edited_time 过滤，避免 Notion 数据库排序变动导致遗漏页面。
+    增量判断交给同步逻辑通过 synced_pages 状态来处理。
     """
     payload: dict = {
         "page_size": 100,
         "sorts": [{"timestamp": "last_edited_time", "direction": "descending"}],
     }
-
-    if last_edited_after:
-        payload["filter"] = {
-            "timestamp": "last_edited_time",
-            "last_edited_time": {"on_or_after": last_edited_after},
-        }
 
     if start_cursor:
         payload["start_cursor"] = start_cursor
@@ -347,13 +341,13 @@ def save_sync_state(state: dict):
 
 # ─── 核心同步逻辑 ──────────────────────────────────────────────────
 
-def fetch_pages(last_edited_after: str | None = None) -> list[dict]:
-    """从 Notion 数据库拉取页面（支持增量）"""
+def fetch_pages() -> list[dict]:
+    """从 Notion 数据库拉取所有页面，增量判断交给调用方"""
     all_pages = []
     start_cursor = None
 
     while True:
-        data = query_database(NOTION_DATABASE_ID, start_cursor, last_edited_after)
+        data = query_database(NOTION_DATABASE_ID, start_cursor)
         all_pages.extend(data.get("results", []))
         if not data.get("has_more"):
             break
@@ -430,15 +424,11 @@ def sync_notion():
     # 加载同步状态
     state = load_sync_state()
     synced_pages = state.get("synced_pages", {})
-    last_sync = state.get("last_sync")
 
-    # 增量拉取：只拉取上次同步之后修改过的页面
-    if last_sync:
-        print(f"   上次同步: {last_sync}")
-        print(f"   只拉取此后修改的页面\n")
+    print("   拉取 Notion 数据库全部页面，通过本地状态判断增量...\n")
 
     try:
-        pages = fetch_pages(last_edited_after=last_sync)
+        pages = fetch_pages()
     except Exception as e:
         print(f"❌ Notion API 调用失败: {e}")
         return
