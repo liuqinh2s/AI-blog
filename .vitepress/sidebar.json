@@ -58,7 +58,12 @@
     {
       "text": "月刊",
       "collapsed": true,
-      "items": []
+      "items": [
+        {
+          "text": "2026-04",
+          "link": "/digests/monthly/2026-04"
+        }
+      ]
     },
     {
       "text": "季刊",
