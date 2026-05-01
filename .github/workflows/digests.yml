@@ -49,10 +49,15 @@ jobs:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: python3 scripts/generate_digests.py
 
+      - name: AI 自动打标签
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: python3 scripts/generate_tags.py
+
       - name: 清理失效链接
         run: python3 scripts/cleanup_dead_links.py
 
-      - name: 生成侧边栏
+      - name: 生成侧边栏和标签数据
         run: python3 scripts/generate_sidebar.py
 
       - name: Commit 期刊内容

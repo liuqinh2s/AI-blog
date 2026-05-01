@@ -37,6 +37,7 @@ export default defineConfig({
         nav: [
             { text: "首页", link: "/" },
             { text: "博客", link: "/posts/" },
+            { text: "标签", link: "/tags/" },
             {
                 text: "期刊",
                 items: [

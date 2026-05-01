@@ -10,6 +10,9 @@
     "notion:sync": "python3 scripts/sync_notion.py",
     "sync:all": "python3 scripts/sync_notion.py",
     "ai:digests": "python3 scripts/generate_digests.py",
+    "ai:tags": "python3 scripts/generate_tags.py",
+    "ai:tags:all": "python3 scripts/generate_tags.py --all",
+    "ai:tags:preview": "python3 scripts/generate_tags.py --dry-run",
     "ai:sidebar": "python3 scripts/generate_sidebar.py",
     "ai:distribute": "python3 scripts/distribute.py",
     "ai:distribute:preview": "python3 scripts/distribute.py --dry-run",
@@ -18,7 +21,7 @@
     "ai:distribute:wechat": "python3 scripts/distribute.py --platforms wechat",
     "ai:distribute:xhs": "python3 scripts/distribute.py --platforms xiaohongshu",
     "ai:distribute:zsxq": "python3 scripts/distribute.py --platforms zsxq",
-    "ai:all": "python3 scripts/sync_notion.py && python3 scripts/generate_digests.py && python3 scripts/generate_sidebar.py && python3 scripts/distribute.py"
+    "ai:all": "python3 scripts/sync_notion.py && python3 scripts/generate_digests.py && python3 scripts/generate_tags.py && python3 scripts/generate_sidebar.py && python3 scripts/distribute.py"
   },
   "repository": {
     "type": "git",
