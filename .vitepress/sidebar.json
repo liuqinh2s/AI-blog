@@ -40,6 +40,10 @@
       "collapsed": true,
       "items": [
         {
+          "text": "2026-05-04",
+          "link": "/digests/daily/2026-05-04"
+        },
+        {
           "text": "2026-05-02",
           "link": "/digests/daily/2026-05-02"
         },
@@ -61,6 +65,10 @@
       "text": "周刊",
       "collapsed": true,
       "items": [
+        {
+          "text": "2026-W18",
+          "link": "/digests/weekly/2026-W18"
+        },
         {
           "text": "2026-W17",
           "link": "/digests/weekly/2026-W17"
