@@ -4,6 +4,7 @@ title: 周刊
 
 # 📰 周刊
 
+- [2026-W21](/digests/weekly/2026-W21)
 - [2026-W20](/digests/weekly/2026-W20)
 - [2026-W19](/digests/weekly/2026-W19)
 - [2026-W18](/digests/weekly/2026-W18)
