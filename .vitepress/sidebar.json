@@ -140,7 +140,12 @@
     {
       "text": "季刊",
       "collapsed": true,
-      "items": []
+      "items": [
+        {
+          "text": "2026-Q2",
+          "link": "/digests/quarterly/2026-Q2"
+        }
+      ]
     },
     {
       "text": "年刊",
